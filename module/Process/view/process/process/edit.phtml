@@ -1,0 +1,307 @@
+<?php
+// module/Album/view/album/album/edit.phtml:
+
+$title = 'Edit process';
+$this->headTitle($title.' - ');
+?>
+
+<script>
+        tinyMCE.init({
+            mode : "textareas",
+            theme : "advanced",
+                        //elements : "textareaId",
+            plugins : "advimage,advlink,media,contextmenu,table",
+            theme_advanced_buttons1_add_before : "newdocument,separator",
+            theme_advanced_buttons1_add : "fontselect,fontsizeselect",
+            theme_advanced_buttons2_add : "separator,forecolor,backcolor,liststyle",
+            theme_advanced_buttons2_add_before: "cut,copy,separator,",
+            theme_advanced_buttons3_add_before : "",
+            theme_advanced_buttons3_add : "media,tablecontrols",
+            theme_advanced_toolbar_location : "top",
+            theme_advanced_toolbar_align : "left",
+            extended_valid_elements : "hr[class|width|size|noshade]",
+            paste_use_dialog : false,
+            theme_advanced_resizing : true,
+            theme_advanced_resize_horizontal : true,
+            apply_source_formatting : true,
+            force_br_newlines : true,
+            force_p_newlines : false,  
+            relative_urls : true
+        });
+</script>
+<div id="processWrapper">
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<?php
+$intParentId = $process->parentId;
+
+if($intParentId != 0) :
+?>
+<p><a href="<?php echo $this->url('process',
+            array('action'=>'versions', 'id' => $intParentId));?>">Show Versions</a></p>
+<?php
+	$intParentId = $process->processId;
+endif; 
+?>
+
+<?php
+$form->setAttribute('action', $this->url(
+    'process',
+    array(
+        'action' => 'edit',
+        'id'     => $this->processId,
+    )
+));
+
+$strName = $user->firstName.' '.$user->lastName;
+
+$form->prepare();
+
+echo $this->form()->openTag($form);
+
+echo $this->formHidden($form->get('processId'));
+
+	?>
+	<h4>Created by : <?php echo $strName; ?></h4><br/>
+	<div class="clearBoth"></div>
+	<div>
+		<table border="1" style="margin:auto;width: 700px;">
+			<thead>
+				<tr>
+					<th>Cost/Hour</th>
+					<th>Daily Rate</th>
+					<th>Cost(w/o margin)</th>
+					<th>Total Cost(PHP)</th>
+					<th>Total Cost(USD)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th><?php echo number_format($process->costPerHour); ?></th>
+					<th><?php echo number_format($process->dailyRate); ?></th>
+					<th><?php echo number_format($process->costInPesos); ?></th>
+					<th><?php echo number_format($process->totalInPhp); ?></th>
+					<th><?php echo number_format($process->totalInDollars); ?></th>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<br/>
+	<div class="clearBoth"></div>
+	<?php 
+		//$form->get('teams')->setLabel('Choose Team');
+		echo $this->formRow($form->get('status'));
+	?>
+	<div class="clearBoth"><br/></div>	
+	<div class="leftSide pull-left">
+		<div class="pull-left">
+			<?php $objName = $form->get('name'); ?>
+			<div class="pull-right">
+				<?php echo $this->formInput($objName); ?>
+			</div>
+			<div class="pull-right processLabel"><?php echo $objName->getLabel(); ?></div>
+		</div>
+		<div class="clearBoth"></div>
+		<div class="pull-left">
+			<?php $objClientName = $form->get('clientName'); ?>
+			<div class="pull-right">
+				<?php echo $this->formInput($objClientName); ?>
+			</div>
+			<div class="pull-right processLabel"><?php echo $objClientName->getLabel(); ?></div>
+		</div>
+		<div class="clearBoth"></div>
+		<div class="pull-left">
+			<?php $objOwner = $form->get('owner'); ?>
+			<div class="pull-right">
+				<?php echo $this->formInput($objOwner); ?>
+			</div>
+			<div class="pull-right processLabel"><?php echo $objOwner->getLabel(); ?></div>
+		</div>
+	</div>
+	<div class="rightSide pull-right">
+		<div class="pull-left">
+			<?php $objContactPerson = $form->get('contactPerson'); ?>
+			<div class="pull-right">
+				<?php echo $this->formInput($objContactPerson); ?>
+			</div>
+			<div class="pull-right processLabel"><?php echo $objContactPerson->getLabel(); ?></div>
+		</div>
+		<div class="clearBoth"></div>
+		<div class="pull-left">
+			<?php $objContactEmail = $form->get('contactEmail'); ?>
+			<div class="pull-right">
+				<?php echo $this->formInput($objContactEmail); ?>
+			</div>
+			<div class="pull-right processLabel"><?php echo $objContactEmail->getLabel(); ?></div>
+		</div>
+		<div class="clearBoth"></div>
+		<div class="pull-left">
+			<?php $objContactNumber = $form->get('contactNumber'); ?>
+			<div class="pull-right">
+				<?php echo $this->formInput($objContactNumber); ?>
+			</div>
+			<div class="pull-right processLabel"><?php echo $objContactNumber->getLabel(); ?></div>
+		</div>
+	</div>
+	<div class="clearBoth"></div>
+	<div class="pull-left processTextareaContainer">
+		<?php $objMarginRate = $form->get('marginRate'); ?>
+		<div class="pull-right">
+			<?php echo $this->formInput($objMarginRate); ?>
+		</div>
+		<div class="pull-right processLabel"><?php echo $objMarginRate->getLabel(); ?></div>
+	</div>
+	<div class="clearBoth"></div>
+	<?php 
+		$form->get('teams')->setLabel('Choose Team');
+		echo $this->formRow($form->get('teams'));
+	?>
+	<div class="clearBoth"><br/></div>
+	<div>
+		<?php echo $this->formRow($form->get('deliverables')); ?>
+	</div>
+	<div class="clearBoth"><br/></div>
+	<div class="processTextareaContainer">
+	<?php 
+		echo $this->formRow($form->get('overview'));
+		echo $this->formRow($form->get('scope'));
+		echo $this->formRow($form->get('outOfScope'));
+		echo $this->formRow($form->get('metrics'));
+		echo $this->formRow($form->get('itResources'));
+	?>
+	</div>
+	<div class="clearBoth"><br/></div>
+	<div>
+		<div class="processLabels">VI. Process Flow, Manpower &amp; Cost</div>
+		<div>
+			<table id="processSteps">
+				<thead>
+					<tr>
+						<th>Steps</th><th>Details</th><th>Resources</th><th>Estimated<br/> Turnaround Time</th><th>Total Cost(PHP)</th><th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+				<?php 
+				if (count($steps) > 0 ):
+				$intCount = 0;
+					foreach ($steps as $step):
+				?>
+					<tr class="processStepRows">
+						<td class="processStepsRow1"><?php echo $step['step']->steps; ?></td>
+						<td class="processStepsRow2"><?php echo $step['step']->details; ?></td>
+						<td class="processStepsRow3">
+							<?php if(isset($step['resource'])) :?>
+							<?php
+								$arrResources = $step['resource'];
+								foreach($arrResources as $strResource):
+									echo $strResource.'<br/>'; 
+								endforeach;
+							endif;
+							?>
+						</td>
+						<td class="processStepsRow4"><?php echo $step['step']->turnaroundTime; ?></td>
+						<td class="processStepsRow5"><?php echo number_format($step['step']->totalInPhp); ?></td>
+						<td class="processStepsRow6">
+							<a href="<?php echo $this->url('stepresources').'/'.$step['step']->stepId; ?>" class="processAddResource">Resource</a><br/>
+							<a href="javascript://" class="processEditStep">Edit</a>
+							<a href="javascript://" class="processSaveStep hide">Save</a>
+							<br/><a href="javascript://" class="processRemoveStep">Remove</a>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][stepId]" value="<?php echo $step['step']->stepId; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][steps]" class="processStepNameValue" value="<?php echo $step['step']->steps; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][details]" class="processDetailsValue"  value="<?php echo $step['step']->details; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][turnaroundTime]" class="processTurnaroundTimeValue"  value="<?php echo $step['step']->turnaroundTime; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][costPerHour]" class="processCostHourValue"  value="<?php echo $step['step']->costPerHour; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][costPerStep]"  class="processCostStepValue"  value="<?php echo $step['step']->costPerStep; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][dailyRate]"  class=""  value="<?php echo $step['step']->dailyRate; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][costInPesos]"  class=""  value="<?php echo $step['step']->costInPesos; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][margin]"  class=""  value="<?php echo $step['step']->margin; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][totalInPhp]"  class=""  value="<?php echo $step['step']->totalInPhp; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][totalInDollars]"  class=""  value="<?php echo $step['step']->totalInDollars; ?>"/>
+							<input type="hidden" name="step[<?php echo $intCount; ?>][costPerStep]"  class=""  value="<?php echo $step['step']->costPerStep; ?>"/>
+						</td>
+					</tr>						
+					<?php
+						$intCount++;
+						endforeach; 
+					?>
+				<?php endif;?>
+				</tbody>
+			</table>
+		</div>
+		<div><a href="/process/chart/<?php echo $processId; ?>" target="chart">Show Chart</a></div>
+		<div class="processAddStep">
+			<div class="pull-left">
+				<div class="pull-left processAddStepLeft">Step : </div>
+				<div class="pull-left"><input type="text" id="processStepName"/></div>
+			</div>
+			<div class="clearBoth"></div>
+			<div class="pull-left">
+				<div class="pull-left processAddStepLeft">Details : </div>
+				<div class="pull-left"><input type="text" id="processDetails"/></div>
+				<div class="pull-left marLeft10"><button id="processAddStepButton" type="button">Add Step</button></div>
+			</div>
+			<table id="processStepRow" class="hide">
+				<tr class="processStepRows">
+					<td class="processStepsRow1"></td>
+					<td class="processStepsRow2"></td>
+					<td class="processStepsRow3"></td>
+					<td class="processStepsRow4"></td>
+					<td class="processStepsRow5"></td>
+					<td class="processStepsRow6">
+						<a href="javascript://" class="processEditStep">Edit</a>
+						<a href="javascript://" class="processSaveStep hide">Save</a>
+						<br/><a href="javascript://" class="processRemoveStep">Remove</a>
+						<input type="hidden" name="" class="processStepNameValue" />
+						<input type="hidden" name="" class="processDetailsValue" />
+					</td>
+				</tr>
+			</table>
+			<table id="processResourceRow" class="hide">
+				<tr class="processResourceRows">
+					<td class="processStepsRow1">
+						<select id="processManpowerResource">
+							<?php foreach($resources as $resource): ?>
+							<option value="<?php echo $resource->resourceId; ?>"><?php echo $resource->description; ?></option>
+							<?php endforeach; ?>
+						</select>
+					</td>
+					<td class="processStepsRow2"></td>
+					<td class="processStepsRow3"></td>
+					<td class="processStepsRow4"></td>
+					<td class="processStepsRow5"></td>
+					<td class="processStepsRow6">
+						<a href="javascript://" class="processAddResource">Add Resource</a><br/>
+						<a href="javascript://" class="processEditStep">Edit</a>
+						<a href="javascript://" class="processSaveStep hide">Save</a>
+						<br/><a href="javascript://" class="processRemoveStep">Remove</a>
+						<input type="hidden" name="" class="processStepNameValue" />
+						<input type="hidden" name="" class="processDetailsValue" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="clearBoth"><br/></div>
+    <div>
+    	<span class="processLabels">VII. Samples </span><br/>
+    	<?php if(count($media) > 0): ?>
+    	<table style="margin: auto: text-align: center; width: 800px; margin: 10px 0;">
+    	<thead>
+    		<tr><td>&nbsp;</td><td>Keep Photo</td></tr>
+    	</thead>
+    	<?php
+    	foreach ($media as $objMedia) :
+    		$strImage = $objMedia->path.'/'.$objMedia->filename;
+    		echo '<tr><td><img src="'.$strImage.'" style="width: 300px;"/></td>';
+    		echo '<td><input type="checkbox" name="keepFiles[]" value="'.$objMedia->mediaId.'" checked/></td></tr>';
+    	endforeach; 
+    	?>
+    	</table>
+    	<?php endif;?>
+        <input type="file" maxlength="1" class="multi max-1 accept-gif|jpg|png" name="sampleFiles" value="">
+    </div>
+    <div class="clearBoth"><br/></div>
+	<?php
+		echo $this->formSubmit($form->get('submit'));
+		echo $this->form()->closeTag();
+	?>
+</div>

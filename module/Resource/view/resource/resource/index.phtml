@@ -1,0 +1,42 @@
+<?php
+$title = 'Resources';
+$this->headTitle($title.' - ');
+?>
+<h1>
+	<i class="icon-large icon-briefcase"></i>
+	<?php echo $this->escapeHtml($title); ?>
+</h1>
+<div>
+	<a href="<?php echo $this->url('resource', array('action'=>'add'));?>"
+		class="btn btn-info"><i class="icon-plus-sign"></i>Add new resource</a>
+</div>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Description</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<?php foreach ($resources as $resource) : ?>
+	<tr>
+		<td><?php echo $this->escapeHtml($resource->resourceId);?></td>
+		<td><?php echo $this->escapeHtml($resource->description);?></td>
+		<td><a
+			href="<?php echo $this->url('resource',
+            array('action'=>'edit', 'id' => $resource->resourceId));?>"
+			class="btn btn-sa-green"><i class="icon-edit"></i> Edit</a> <a
+			href="<?php echo $this->url('resource',
+            array('action'=>'delete', 'id' => $resource->resourceId));?>"
+			class="btn btn-danger"><i class="icon-remove"></i> Delete</a>
+		</td>
+	</tr>
+	<?php endforeach; ?>
+</table>
+
+<div class="form-actions">
+	<a href="<?php echo $this->url('dashboard') ?>" class="btn"> <i
+		class="icon-chevron-left"></i> Back to Dashboard
+	</a>
+</div>

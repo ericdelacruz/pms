@@ -1,0 +1,72 @@
+<?php
+$title = 'Finance Settings';
+$this->headTitle($title);
+?>
+<h1><i class="icon-large icon-money"></i> <?php echo $this->escapeHtml($title) ?></h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>SSS Contribution</td>
+            <td><?php echo number_format($finance->sssContribution,2);?></td>
+        </tr>
+        <tr>
+            <td>ECC Contribution</td>
+            <td><?php echo number_format($finance->eccContribution,2);?></td>
+        </tr>
+        <tr>
+            <td>PHIC Contribution</td>
+            <td><?php echo number_format($finance->phicContribution,2);?></td>
+        </tr>
+        <tr>
+            <td>HMDF Contribution</td>
+            <td><?php echo number_format($finance->hmdfContribution,2);?></td>
+        </tr>
+        <tr>
+            <td>Medicare</td>
+            <td><?php echo number_format($finance->medicare,2);?></td>
+        </tr>
+        <tr>
+            <td>Pamper Day Benefit</td>
+            <td><?php echo number_format($finance->pamperDayBenefit,2);?></td>
+        </tr>
+        <tr>
+            <td>Fun/HR Dev Programs and Events</td>
+            <td><?php echo number_format($finance->programsAndEvents,2);?></td>
+        </tr>
+        <tr>
+            <td>Equipment and Furniture Depreciation</td>
+            <td><?php echo number_format($finance->equipmentAndFurniture,2);?></td>
+        </tr>
+        <tr>
+            <td>Software Licenses and Related Maintenance</td>
+            <td><?php echo number_format($finance->softwareAndRelated,2);?></td>
+        </tr>
+        <tr>
+            <td>Bandwidth</td>
+            <td><?php echo number_format($finance->bandwidth,2);?></td>
+        </tr>
+        <tr>
+            <td>Rent, A/C and Utilities</td>
+            <td><?php echo number_format($finance->rentAndUtilities,2);?></td>
+        </tr>
+        <tr>
+            <td>Office Supplies and Shared Services (Security, HR, Admin)</td>
+            <td><?php echo number_format($finance->suppliesAndSharedServices,2);?></td>
+        </tr>
+    </tbody>
+</table>
+<div class="form-actions">
+    <a href="<?php echo $this->url('dashboard') ?>" class="btn">
+        <i class="icon-chevron-left"></i> Back to Dashboard
+    </a>
+    <a class="pull-right btn btn-sa-green" href="<?php echo $this->url('finance', array('action'=>'edit')) ?>">
+        <i class="icon-edit"></i> Update
+    </a>
+</div>

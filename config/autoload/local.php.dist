@@ -1,0 +1,48 @@
+<?php
+/**
+ * Local Configuration Override
+ *
+ * This configuration override file is for overriding environment-specific and
+ * security-sensitive configuration information. Copy this file without the
+ * .dist extension at the end and populate values as needed.
+ *
+ * @NOTE: This file is ignored from Git by default with the .gitignore included
+ * in ZendSkeletonApplication. This is a good practice, as it prevents sensitive
+ * credentials from accidentally being committed into version control.
+ */
+
+$user = $pass = 'root';
+
+// for live
+// $user = 'straigr3_pms';
+// $pass = 'k_oVWeS+i~Lh';
+
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            'orm_default' => array(
+                'params' => array(
+                    'user'     => $user,
+                    'password' => $pass,
+                )
+            )
+        )
+    ),
+
+    // TableGateway configuration
+    // To be removed once migration to Doctrine is complete
+    'db' => array(
+        'username' => $user,
+        'password' => $pass,
+    ),
+
+    // Whether or not to enable a configuration cache.
+    // If enabled, the merged configuration will be cached and used in
+    // subsequent requests.
+    //'config_cache_enabled' => false,
+    // The key used to create the configuration cache file name.
+    //'config_cache_key' => 'module_config_cache',
+    // The path in which to cache merged configuration.
+    //'cache_dir' =>  './data/cache',
+    // ...
+);

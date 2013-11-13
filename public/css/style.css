@@ -1,0 +1,77 @@
+body {
+    padding-bottom: 40px;
+}
+
+#main {
+    padding-top: 30px;
+}
+
+footer p {
+    font-size: 12px;
+}
+
+.navbar a.brand {
+    background: url("../images/sac-logo-nav.png") no-repeat 0 0;
+    height: 40px;
+    width: 173px;
+    padding: 0 5px 0 0;
+    margin-right: 10px;
+    text-indent: -999px;
+    overflow: hidden;
+}
+
+.navbar a.brand:hover, .navbar a.brand:active, .navbar a.brand:focus {
+    background-position: 0 -41px
+}
+
+/**PROCESS**/
+#processWrapper {
+    background: none repeat scroll 0 0 #FFF;
+    padding: 10px;
+}
+#processWrapper .leftSide > div{
+    width: 400px;
+}
+#processWrapper .rightSide {
+    width: 400px;
+}
+#processWrapper .leftSide div .processLabel, #processWrapper .rightSide div .processLabel{
+    width: 150px;
+    text-align: right;
+    margin-right: 5px;
+}
+#processWrapper .processTextareaContainer {
+    margin: auto;
+    width: 600px;
+}
+#processWrapper fieldset legend {
+    border: none;
+}
+#processWrapper .processLabels {
+    font-size: 16px;
+    font-weight: bold;
+}
+#processWrapper .processAddStep {
+    left: 170px;
+    position: relative;
+    text-align: left;
+    top: 20px;
+}
+#processWrapper .processAddStep .processAddStepLeft {
+    width: 200px;
+    text-align: left;
+}
+#processSteps th, #processSteps td{
+    padding: 10px;
+    border: 1px solid;
+}
+#processSteps {
+    border: 1px solid;
+    margin: auto;
+    width: 800px;
+}
+
+.processRadio label{
+    margin-left: 10px;
+    float: left;
+}

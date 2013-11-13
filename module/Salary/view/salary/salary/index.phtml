@@ -1,0 +1,47 @@
+<?php
+$title = 'Salaries';
+$this->headTitle($title.' - ');
+?>
+<h1>
+	<i class="icon-large icon-tasks"></i>
+	<?php echo $this->escapeHtml($title); ?>
+</h1>
+<div>
+	<a href="<?php echo $this->url('salary', array('action'=>'add'));?>" class="btn btn-info"><i class="icon-plus-sign"></i> Add
+		new salary</a>
+</div>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Salary Grade</th>
+			<th>Salary Minimum</th>
+			<th>Salary Maximum</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<?php foreach ($salaries as $salary) : ?>
+	<tr>
+		<td><?php echo $this->escapeHtml($salary->salaryId);?></td>
+		<td><?php echo $this->escapeHtml($salary->grade);?></td>
+		<td><?php echo $this->escapeHtml($salary->salaryMinimum);?></td>
+		<td><?php echo $this->escapeHtml($salary->salaryMaximum);?></td>
+		<td><a class="btn btn-sa-green"
+			href="<?php echo $this->url('salary',
+            array('action'=>'edit', 'id' => $salary->salaryId));?>"><i
+				class="icon-edit"></i> Edit</a> <a class="btn btn-danger"
+			href="<?php echo $this->url('salary',
+            array('action'=>'delete', 'id' => $salary->salaryId));?>"><i
+				class="icon-remove"></i> Delete</a>
+		</td>
+	</tr>
+	<?php endforeach; ?>
+
+</table>
+
+<div class="form-actions">
+	<a href="<?php echo $this->url('dashboard') ?>" class="btn"> <i
+		class="icon-chevron-left"></i> Back to Dashboard
+	</a>
+</div>

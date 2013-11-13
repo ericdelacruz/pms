@@ -1,0 +1,63 @@
+<div id="processResourceWrapper" style="background: none repeat scroll 0 0 #FFFFFF; margin: 20px; position: relative; padding: 10px;">
+	<form method="post">
+	<input type="hidden" name="stepId" value="<?php echo $stepId; ?>"/>
+	<div>
+		<span>Resources : </span>
+		<select id="stepResource" name="resourceId">
+			<option value="0"></option>
+			<?php foreach ($resources as $resource) :?>
+			<option value="<?php echo $resource->resourceId?>"><?php echo $resource->description; ?></option>
+			<?php endforeach; ?>
+		</select>
+	</div>
+	<div>
+		<span>Employee : </span>
+		<select id="stepUser" name="userId">
+		</select>
+	</div>
+	<div>Days Needed : <input type="text" id="addResourceDays" name="daysNeeded"></div>
+	<div>
+		<button type="submit" id="addStepResource">Add Resource</button>
+		<button type="button" onclick="document.location.href='/process/edit/<?php echo $processId; ?>';">Back to Process</button>
+	</div>
+	</form>
+	<div class="clearBoth"></div>
+	<?php if (count($stepresources) > 0): ?>	
+	<div>
+		<table style="width: 800px; margin: auto;" border="1">
+			<thead>
+				<tr>
+					<th>User ID</th>
+					<th>Resource ID</th>
+					<th>Total Manpower Cost</th>
+					<th>Monthly Rate</th>
+					<th>Margin</th>
+					<th>Total Billing (PHP)</th>
+					<th>Total Billing (USD)</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php foreach ($stepresources as $stepresource) :?>
+				<tr>
+					<td><?php echo $stepresource->userId; ?></td>
+					<td><?php echo $stepresource->resourceId; ?></td>
+					<td><?php echo $stepresource->totalManpowerCost; ?></td>
+					<td><?php echo $stepresource->monthlyRate; ?></td>
+					<td><?php echo $stepresource->costMargin; ?></td>
+					<td><?php echo $stepresource->totalBillingPHP; ?></td>
+					<td><?php echo $stepresource->totalBillingUSD; ?></td>
+					<td>
+						<form method="post">
+						<input type="hidden" name="stepResourceId" value="<?php echo $stepresource->stepResourceId;?>"/>
+						<button type="submit" name="deleteButton">Delete</button>
+						</form>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+			</tbody>
+		</table>
+	</div>
+	<?php endif;?>
+</div>
+<br/>

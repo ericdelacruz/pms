@@ -1,0 +1,102 @@
+<?php $intNumSteps = count($steps); ?>
+<script>
+jsPlumb.bind("ready", function() {
+			var color = "gray";
+
+			jsPlumb.importDefaults({
+				// notice the 'curviness' argument to this Bezier curve.  the curves on this page are far smoother
+				// than the curves on the first demo, which use the default curviness value.			
+				Connector : [ "Bezier", { curviness:50 } ],
+				DragOptions : { cursor: "pointer", zIndex:2000 },
+				PaintStyle : { strokeStyle:color, lineWidth:2 },
+				EndpointStyle : { radius:9, fillStyle:color },
+				HoverPaintStyle : {strokeStyle:"#ec9f2e" },
+				EndpointHoverStyle : {fillStyle:"#ec9f2e" },			
+				Anchors :  [ "BottomCenter", "TopCenter" ]
+			});
+			
+				
+			// declare some common values:
+			var arrowCommon = { foldback:0.7, fillStyle:color, width:14 },
+				// use three-arg spec to create two different arrows with the common values:
+				overlays = [
+					[ "Arrow", { location:0.7 }, arrowCommon ],
+					//[ "Arrow", { location:0.3, direction:-1 }, arrowCommon ]
+				];
+
+			<?php 
+			if ($intNumSteps > 0):
+				$intCount = 1;
+				foreach ($steps as $step) :
+					if ($intCount < $intNumSteps) : 
+						echo 'jsPlumb.connect({source:"chart'.$intCount++.'", target:"chart'.$intCount.'", overlays:overlays});';
+					endif;
+				endforeach;
+			endif; 
+			?>
+			
+			jsPlumb.draggable(jsPlumb.getSelector(".chartWindow"), {
+				containment: "parent"
+			});
+		});
+</script>
+<style>
+.chartWindow { 
+	border: 1px dotted #000; 
+	opacity:0.8; 
+	/*filter:alpha(opacity=80);*/ 
+	width:350px;
+	height:100px; 
+	z-index:20; 
+	position:absolute; 
+	color:black;
+	font-family:helvetica, sans;
+	padding-top:0.9em; 
+	font-size:0.9em;
+	text-align:center;
+	background-color:white;
+}
+</style>
+<?php
+$intMiddle = round($intNumSteps/2);
+
+$intWrapperWidth = ($intMiddle * 200);
+ 
+?>
+<div id="processWrapper" style="position: relative; height:<?php echo $intWrapperWidth.'px;';?>">
+
+	<?php
+	if ($intNumSteps > 0) :
+		$intCount = 1;
+
+		$intLeftPos = 10;
+		$intTopPos = 10;
+		$bFirstCol = true;
+
+		foreach($steps as $step):
+	?>
+		<div class="chartWindow" id="chart<?php echo $intCount; ?>" style="top:<?php echo $intTopPos; ?>px; left:<?php echo $intLeftPos; ?>px;">
+			<span style="position: absolute; left: 10px; top: 5px; font-weight: bold; font-size: 16px;"><?php echo $intCount; ?></span>
+			<span style="font-size: 14px;font-weight: bold;"><?php echo $step->steps; ?></span><br/>
+			<hr style="margin:2px;"/>
+			<!-- Resource : <?php echo $step->resourceName; ?><br/> -->
+			Cost/Step: <?php echo $step->costPerStep;?>
+		</div>
+	<?php
+			if ($bFirstCol) :
+				if ($intMiddle > $intCount) :
+					$intTopPos += 200;
+				else:
+					$intTopPos = 10;
+					$intLeftPos = 550;
+					$bFirstCol = false;
+			 	endif;
+			else :
+				$intTopPos += 200;
+			endif;
+			$intCount++;
+		endforeach;
+	endif; 
+	?>
+	
+</div>

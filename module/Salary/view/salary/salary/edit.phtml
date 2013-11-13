@@ -1,0 +1,81 @@
+<?php
+$title = 'Edit salary';
+$this->headTitle($title.' - ');
+?>
+<h1 class="page-header">
+	<i class="icon-large icon-tasks"></i>
+	<?php echo $this->escapeHtml($title); ?>
+</h1>
+
+<?php
+$form->setAttribute('action', $this->url(
+                'salary',
+                array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    )
+));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+
+echo $this->formHidden($form->get('salaryId'));
+
+?>
+<div class="row-fluid">
+	<div class="span5 offset1">
+		<?php
+		echo $this->formRow($form->get('grade'));
+		echo $this->formRow($form->get('band'));
+		echo $this->formRow($form->get('tier'));
+		echo $this->formRow($form->get('salaryMinimum'));
+		echo $this->formRow($form->get('midpoint'));
+		echo $this->formRow($form->get('salaryMaximum'));
+		echo $this->formRow($form->get('mealAllowance'));
+		echo $this->formRow($form->get('transportationAllowance'));
+		?>
+
+	</div>
+	<div class="span5">
+		<?php
+		echo $this->formRow($form->get('variableAllowance'));
+		echo $this->formRow($form->get('nightDifferential'));
+		echo $this->formRow($form->get('overtimeHolidayPremium'));
+		?>
+		<?php $objMonthPay = $form->get('monthPay'); ?>
+		<div class="pull-left processLabel">
+			<?php echo $objMonthPay->getLabel(); ?>
+		</div>
+		<div class="processRadio pull-left">
+			<?php
+			echo $this->formRadio($objMonthPay);
+			?>
+		</div>
+		<div class="clearfix"></div>
+
+		<?php
+		echo $this->formRow($form->get('vacationLeaves'));
+		echo $this->formRow($form->get('sickLeaves'));
+		?>
+		<div class="clearfix"></div>
+		<?php $objCreditsAccruedPerHour = $form->get('creditsAccruedPerHour'); ?>
+		<div class="pull-left processLabel">
+			<?php echo $objCreditsAccruedPerHour->getLabel(); ?>
+		</div>
+		<div class="processRadio pull-left">
+			<?php
+			echo $this->formRadio($objCreditsAccruedPerHour);
+			?>
+		</div>
+	</div>
+</div>
+
+<div class="form-actions text-right">
+	<a href="<?php echo $this->url('dashboard') ?>" class="btn pull-left"> <i
+		class="icon-chevron-left"></i> Back to Dashboard
+	</a>
+
+    <?php echo $this->formSubmit($form->get('submit')) ?>
+    <a href="<?php echo $this->url('salary') ?>" class="btn">Cancel</a>
+</div>
+<?php echo $this->form()->closeTag(); ?>

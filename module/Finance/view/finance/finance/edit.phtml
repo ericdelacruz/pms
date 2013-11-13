@@ -1,0 +1,44 @@
+<?php
+$title = 'Update Finance Settings';
+$this->headTitle($title);
+?>
+<h1 class="page-header"><i class="icon-large icon-money"></i> <?php echo $this->escapeHtml($title) ?></h1>
+
+<?php
+$form->setAttribute('action',
+    $this->url('finance', array(
+        'action' => 'edit',
+        'id'     => $this->id,
+    ))
+)->prepare(); ?>
+
+<?php echo $this->form()->openTag($form) ?>
+<?php echo $this->formHidden($form->get('financeId')) ?>
+
+<div class="row-fluid">
+    <div class="span5 offset1">
+        <?php echo $this->formRow($form->get('sssContribution')) ?>
+        <?php echo $this->formRow($form->get('eccContribution')) ?>
+        <?php echo $this->formRow($form->get('phicContribution')) ?>
+        <?php echo $this->formRow($form->get('hmdfContribution')) ?>
+        <?php echo $this->formRow($form->get('medicare')) ?>
+        <?php echo $this->formRow($form->get('pamperDayBenefit')) ?>
+    </div>
+    <div class="span5">
+        <?php echo $this->formRow($form->get('programsAndEvents')) ?>
+        <?php echo $this->formRow($form->get('equipmentAndFurniture')) ?>
+        <?php echo $this->formRow($form->get('softwareAndRelated')) ?>
+        <?php echo $this->formRow($form->get('bandwidth')) ?>
+        <?php echo $this->formRow($form->get('rentAndUtilities')) ?>
+        <?php echo $this->formRow($form->get('suppliesAndSharedServices')) ?>
+    </div>
+</div>
+<div class="form-actions text-right">
+    <a href="<?php echo $this->url('dashboard') ?>" class="btn pull-left">
+        <i class="icon-chevron-left"></i> Back to Dashboard
+    </a>
+
+    <?php echo $this->formSubmit($form->get('submit')) ?>
+    <a href="<?php echo $this->url('finance') ?>" class="btn">Cancel</a>
+</div>
+<?php echo $this->form()->closeTag(); ?>

@@ -1,0 +1,37 @@
+<?php
+$title = 'Delete team';
+$this->headTitle($title.' - ');
+?>
+<h1 class="page-header">
+	<i class="icon-large icon-tasks"></i>
+	<?php echo $this->escapeHtml($title); ?>
+</h1>
+
+<?php
+$url = $this->url('team', array(
+    'action' => 'delete',
+    'id'     => $this->id,
+));
+?>
+<form action="<?php echo $url; ?>" method="post">
+	<div class="row-fluid">
+		<div class="span12" style="text-align: center;">
+			<p>
+				Are you sure that you want to delete '
+				<?php echo $this->escapeHtml($team->name); ?>
+				'?
+			</p>
+			<input type="hidden" name="teamId"
+				value="<?php echo (int) $team->id; ?>" /> <input type="submit"
+				class="btn btn-sa-green" name="del" value="Yes" /> <input
+				type="submit" class="btn btn-danger" name="del" value="No" />
+		</div>
+		<div class="clearfix"></div>
+		<div class="form-actions text-right">
+			<a href="<?php echo $this->url('dashboard') ?>" class="btn pull-left">
+				<i class="icon-chevron-left"></i> Back to Dashboard
+			</a> <input type="hidden" name="teamId"
+				value="<?php echo (int) $team->id; ?>" />
+		</div>
+	</div>
+</form>

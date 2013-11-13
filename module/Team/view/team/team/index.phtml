@@ -1,0 +1,46 @@
+<?php
+// module/Album/view/album/album/index.phtml:
+
+$title = 'Teams';
+$this->headTitle($title.' - ');
+?>
+<h1 class="page-header">
+	<i class="icon-large icon-group"></i>
+	<?php echo $this->escapeHtml($title); ?>
+</h1>
+<p>
+	<a href="<?php echo $this->url('team', array('action'=>'add'));?>"
+		class="btn btn-info"><i class="icon-plus-sign"></i> Add Team</a>
+</p>
+
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Team Name</th>
+			<th>Overhead Cost</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<?php foreach ($teams as $team) : ?>
+	<tr>
+		<td><?php echo $this->escapeHtml($team->teamId);?></td>
+		<td><?php echo $this->escapeHtml($team->name);?></td>
+		<td><?php echo $this->escapeHtml($team->overheadCost);?></td>
+		<td><a
+			href="<?php echo $this->url('team',
+            array('action'=>'edit', 'id' => $team->teamId));?>"
+			class="btn btn-sa-green"><i class="icon-edit"></i> Edit</a> <a
+			href="<?php echo $this->url('team',
+            array('action'=>'delete', 'id' => $team->teamId));?>"
+			class="btn btn-danger"><i class="icon-remove"></i> Delete</a>
+		</td>
+	</tr>
+	<?php endforeach; ?>
+</table>
+
+<div class="form-actions text-right">
+	<a href="<?php echo $this->url('dashboard') ?>" class="btn pull-left">
+		<i class="icon-chevron-left"></i> Back to Dashboard
+	</a>
+</div>

@@ -1,0 +1,67 @@
+<?php echo $this->doctype(); ?>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <?php echo $this->headTitle($this->translate('Project Management System'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+    <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
+
+    <!-- Le styles -->
+    <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/images/favicon.ico'))
+                    ->appendStylesheet($this->basePath() . '/css/bootstrap.min.css')
+                    ->appendStylesheet($this->basePath() . '/css/base.css')
+                    ->appendStylesheet($this->basePath() . '/css/style.css') ?>
+
+    <!-- Scripts -->
+    <?php echo $this->headScript()
+                    // HTML5 shiv
+                    ->appendFile($this->basePath() . '/js/vendor/html5.js', 'text/javascript', array('conditional' => 'lt IE 9'))
+                    // JQuery
+                    ->appendFile($this->basePath() . '/js/vendor/jquery-1.10.1.min.js')
+                    ->appendFile($this->basePath() . '/js/vendor/jquery-ui-1.10.1.custom.min.js')
+                    // Bootstrap
+                    ->appendFile($this->basePath() . '/js/vendor/bootstrap.min.js')
+                    // TinyMCE
+                    ->appendFile($this->basePath() . '/js/vendor/tiny_mce/tiny_mce.js')
+                    // jsPlumb
+                    ->appendFile($this->basePath() . '/js/plugins/jquery.jsPlumb-1.3.16-all-min.js')
+                    // MultiFile
+                    ->appendFile($this->basePath() . '/js/plugins/jquery.MultiFile.min.js')
+                    ->appendFile($this->basePath() . '/js/plugins/jquery.blockUI.js')
+                    // Custom Js
+                    ->appendFile($this->basePath() . '/js/main.js') ?>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+
+                <a class="brand" href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Project Management System') ?></a>
+
+                <div class="nav-collapse collapse pull-right">
+
+                        <?php if ($this->zfcUserIdentity()): ?>
+                            <a class="btn btn-primary" href="<?php echo $this->url('zfcuser/profile') ?>"><i class="icon-user icon-white"></i> <?php echo $this->translate('Profile') ?></a>
+                            <a class="btn btn-primary" href="<?php echo $this->url('zfcuser/logout') ?>"><i class="icon-off icon-white"></i> <?php echo $this->translate('Logout') ?></a>
+                        <?php endif; ?>
+
+                </div>
+            </div>
+        </div>
+    </div><!-- navbar end -->
+    <div id="main" class="container-fluid">
+        <?php echo $this->content; ?>
+        <hr>
+        <footer>
+            <p class="text-center muted">&copy; <?php echo date('Y') ?> StraightArrow Corp. <?php echo $this->translate('All rights reserved.') ?></p>
+        </footer>
+    </div> <!-- /container -->
+    <?php echo $this->inlineScript() ?>
+</body>
+</html>

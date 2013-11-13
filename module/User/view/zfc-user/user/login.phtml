@@ -1,0 +1,46 @@
+<div class="row-fluid">
+    <div class="span4">
+        <div class="well">
+        <?php
+            $form = $this->loginForm;
+            $form->prepare()
+                ->setAttribute('action', $this->url('zfcuser/login'))
+                ->setAttribute('method', 'post') ?>
+
+        <?php echo $this->form()->openTag($form) ?>
+            <legend>Log In</legend>
+            <dl>
+                <?php // Output form error
+                    echo $this->formElementErrors()
+                        ->setMessageOpenFormat('<div class="alert alert-error">')
+                        ->setMessageCloseString('</div>')
+                        ->render($form->get('identity')) ?>
+
+                <?php $identity = $form->get('identity')->setAttribute('class', 'span12') ?>
+                <dt><?php echo $this->formLabel($identity) ?></dt>
+                <dd><?php echo $this->formInput($identity) ?></dd>
+
+                <?php $credential = $form->get('credential')->setAttribute('class', 'span12') ?>
+                <dt><?php echo $this->formLabel($credential) ?></dt>
+                <dd><?php echo $this->formInput($credential) ?></dd>
+
+                <?php if ($this->redirect): ?>
+                    <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
+                <?php endif ?>
+
+                <dd><?php echo $this->formButton($form->get('submit')->setAttribute('class', 'btn btn-sa-green')) ?></dd>
+            </dl>
+        <?php echo $this->form()->closeTag() ?>
+
+        <?php if ($this->enableRegistration) : ?>
+            <p>
+                Not registered? <a href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect='.$this->redirect : '') ?>">Sign up!</a>
+            </p>
+        <?php endif; ?>
+
+        </div>
+    </div>
+    <div class="span8 text-center padTop20">
+        <img src="<?php echo $this->basePath() ?>/images/sac-logo.png" alt="">
+    </div>
+</div>

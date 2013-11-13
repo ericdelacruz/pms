@@ -1,0 +1,30 @@
+<?php
+$title = 'Process List';
+$this->headTitle($title.' - ');
+?>
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('process', array('action'=>'add'));?>">Add New Process</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>Name</th>
+    <th>Client Name</th>
+    <th>Contact Person</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($processes as $process) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($process->name);?></td>
+    <td><?php echo $this->escapeHtml($process->clientName);?></td>
+    <td><?php echo $this->escapeHtml($process->contactPerson);?></td>
+    <td>
+        <a href="<?php echo $this->url('process',
+            array('action'=>'edit', 'id' => $process->processId));?>">Edit</a>
+        <a href="<?php echo $this->url('process',
+            array('action'=>'delete', 'id' => $process->processId));?>">Delete</a>
+    </td>
+</tr>
+<?php endforeach; ?>
+</table>
