@@ -1,15 +1,14 @@
 <?php
+/**
+ * @package Process
+ */
 return array(
     'controllers' => array(
         'invokables' => array(
             'Process\Controller\Process' => 'Process\Controller\ProcessController',
         ),
-		'factories' => array(
-			'Process' => 'Process\Controller\ProcessController',
-		),
     ),
 
-    // The following section is new and should be added to your file
     'router' => array(
         'routes' => array(
             'process' => array(
@@ -26,26 +25,27 @@ return array(
                     ),
                 ),
             ),
-			'stepresources' => array(
-				'type'    => 'Literal',
-				'options' => array(
-						'route'    => '/process/resources',
-						'defaults' => array(
-								'__NAMESPACE__' => 'Process\Controller',
-								'controller'    => 'Process',
-								'action'        => 'stepresources',
-						),
-				),
-			),
         ),
     ),
 
     'view_manager' => array(
-		'template_map'             => array(
-			'process/ajax/view' => __DIR__ . '/../view/process/ajax/view.phtml',
-		),
         'template_path_stack' => array(
             'process' => __DIR__ . '/../view',
+        ),
+    ),
+
+    'doctrine' => array(
+        'driver' => array(
+            'Process_entities' => array(
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'cache' => 'array',
+                'paths' => array(__DIR__ . '/../src/' . 'Process/Entity')
+            ),
+            'orm_default' => array(
+                'drivers' => array(
+                    'Process\Entity' => 'Process_entities'
+                ),
+            ),
         ),
     ),
 );

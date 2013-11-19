@@ -1,30 +1,47 @@
 <?php
-$title = 'Process List';
+$title = 'Processes';
 $this->headTitle($title.' - ');
 ?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>
-    <a href="<?php echo $this->url('process', array('action'=>'add'));?>">Add New Process</a>
-</p>
+<h1>
+	<i class="icon-large icon-tasks"></i>
+	<?php echo $this->escapeHtml($title); ?>
+</h1>
+<div>
+	<a href="<?php echo $this->url('process', array('action'=>'add'));?>" class="btn btn-info"><i class="icon-plus-sign"></i> Add
+		new process</a>
+</div>
 
-<table class="table">
-<tr>
-    <th>Name</th>
-    <th>Client Name</th>
-    <th>Contact Person</th>
-    <th>&nbsp;</th>
-</tr>
-<?php foreach ($processes as $process) : ?>
-<tr>
-    <td><?php echo $this->escapeHtml($process->name);?></td>
-    <td><?php echo $this->escapeHtml($process->clientName);?></td>
-    <td><?php echo $this->escapeHtml($process->contactPerson);?></td>
-    <td>
-        <a href="<?php echo $this->url('process',
-            array('action'=>'edit', 'id' => $process->processId));?>">Edit</a>
-        <a href="<?php echo $this->url('process',
-            array('action'=>'delete', 'id' => $process->processId));?>">Delete</a>
-    </td>
-</tr>
-<?php endforeach; ?>
+<table class="table table-hover">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Client</th>
+			<th>Contact Person</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<?php foreach ($processes as $process) : ?>
+	<tr>
+		<td><?php echo $this->escapeHtml($process->processId);?></td>
+		<td><?php echo $this->escapeHtml($process->name);?></td>
+		<td><?php echo $this->escapeHtml($process->clientName);?></td>
+		<td><?php echo $this->escapeHtml($process->contactPerson);?></td>
+		<td><a class="btn btn-sa-green"
+			href="<?php echo $this->url('process',
+            array('action'=>'edit', 'id' => $process->processId));?>"><i
+				class="icon-edit"></i> Edit</a> <a class="btn btn-danger"
+			href="<?php echo $this->url('process',
+            array('action'=>'delete', 'id' => $process->processId));?>"><i
+				class="icon-remove"></i> Delete</a>
+		</td>
+	</tr>
+	<?php endforeach; ?>
+
 </table>
+
+<div class="form-actions">
+	<a href="<?php echo $this->url('dashboard') ?>" class="btn"> <i
+		class="icon-chevron-left"></i> Back to Dashboard
+	</a>
+</div>

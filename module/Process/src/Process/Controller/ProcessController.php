@@ -1,76 +1,49 @@
 <?php
 namespace Process\Controller;
 
-use Zend\View\Model\ViewModel;
-use Process\Model\Process;
-use Process\Form\ProcessForm;
 use SAC\Mvc\Controller;
+use Process\Model\Process;
 
-use Process\Model\Step;
-use Process\Model\StepResource;
-use Process\Model\Media;
-use Team\Model\Team;
-use Resource\Model\Resource;
-use Salary\Model\Salary;
-
-use Process\Entity\StepEntity;
-use Process\Entity\ProcessEntity;
 
 class ProcessController extends Controller
-{
-	protected $form;
-	protected $storage;
-	protected $authservice;
-	protected $strModule = 'Process';
+{	
+	
+	public function indexAction()
+	{
+	    $objProcessEntity = $this->getEntity();
+	    $objProcess = new Process();
+	    $objProcess->setDAO($objProcessEntity);
+	    
+	    
+	    $processes = $objProcess->index();
+	    return compact('processes');
+	}
+	
+	public function addAction()
+	{
+	    $arrModules = array('Process\Model\ProcessDAO', 'Team\Model\TeamDAO', 'Salary\Model\SalaryDAO', 'Resource\Model\ResourceDAO');
+	    
+	    $arrDAO = $this->_setMultipleDAO($arrModules);
+	    
+	    $objProcess = new Process();
+	    $objProcess->setMultipleDAO($arrDAO);
+	
+	    $objRequest = $this->getRequest();
+	    $intUserId = $this->zfcUserAuthentication()->getIdentity()->getId();
+	
+	    $arrData = $objProcess->add($objRequest, $intUserId);
+	
+	    $bRedirect = $arrData['redirect'];
+	
+	    if ($bRedirect)
+	        return $this->redirect()->toRoute($bRedirect);
+	    else {
+	        $form = $arrData['form'];
+	        return compact('form');
+	    }
+	}
 
-    public function indexAction()
-    {
-    	$arrProcess = array();
-
-    	$arrProcesses = $this->getTable($this->strModule)->fetchAllByField('parentId', '0');
-
-    	foreach($arrProcesses as $objProcess) {
-    		//get child processes if there are any
-    		$objProcessTemp = $this->getTable($this->strModule)->fetchAllByField('parentId', $objProcess->processId);
-    		$intNum = count($objProcessTemp);
-
-    		if ($intNum > 0) {
-    			for($intCount=0;$intCount<$intNum;$intCount++) {
-    				$objProcessTemp->next();
-    			}
-    			$arrProcess[] = $objProcessTemp->current();
-    		} else {
-    			$arrProcess[] = $objProcess;
-    		}
-    	}
-
-        return new ViewModel(array(
-            'processes' => $arrProcess
-        ));
-    }
-    
-    public function versionsAction()
-    {    	
-    	$id = (int) $this->params()->fromRoute('id', 0);
-    	if (!$id) {
-    		return $this->redirect()->toRoute('process', array(
-    				'action' => 'index'
-    		));
-    	}
-
-    	$arrParent = array();
-    	$arrProcesses = array();
-    	
-    	$arrParent = $this->getTable($this->strModule)->getProcess($id); //parent process
-    	$arrProcesses = $this->getTable($this->strModule)->fetchAllByField('parentId', $id);
-    	
-    	return array(
-    			'parent' => $arrParent,
-    			'processes' => $arrProcesses,
-    	);
-    }
-
-    public function addAction()
+    public function addAction2()
     {
     	//get resources
     	//$arrResources = $this->getTable('Resource', true)->fetchAll();
@@ -513,6 +486,27 @@ class ProcessController extends Controller
     			'processId' => $id,
     			'steps' => $arrSteps,
     	);
+    }
+    
+    public function versionsAction()
+    {
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('process', array(
+                            'action' => 'index'
+            ));
+        }
+    
+        $arrParent = array();
+        $arrProcesses = array();
+         
+        $arrParent = $this->getTable($this->strModule)->getProcess($id); //parent process
+        $arrProcesses = $this->getTable($this->strModule)->fetchAllByField('parentId', $id);
+         
+        return array(
+                        'parent' => $arrParent,
+                        'processes' => $arrProcesses,
+        );
     }
     
     /** AJAX **/

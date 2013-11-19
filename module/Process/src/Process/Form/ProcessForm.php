@@ -2,7 +2,6 @@
 namespace Process\Form;
 
 use SAC\Form\Form;
-use Process\Model;
 
 class ProcessForm extends Form
 {
@@ -87,31 +86,22 @@ class ProcessForm extends Form
                 'type'  => 'submit',
                 'value' => 'Go',
                 'id' => 'submitbutton',
+                'class' => 'btn btn-sa-green'
             ),
         ));
         
         return $this;
     }
     
-    public function setServiceLocator(ServiceLocator $sl)
-    {
-    	$this->serviceLocator = $sl;
-    }
+//     public function populateValues($data)
+//     {
+//     	foreach($data as $key=>$row)
+//     	{
+//     		if (is_array(@json_decode($row))){
+//     			$data[$key] =   new \ArrayObject(\Zend\Json\Json::decode($row), \ArrayObject::ARRAY_AS_PROPS);
+//     		}
+//     	}
     
-    public function getServiceLocator()
-    {
-    	return $this->serviceLocator;
-    }
-    
-    public function populateValues($data)
-    {
-    	foreach($data as $key=>$row)
-    	{
-    		if (is_array(@json_decode($row))){
-    			$data[$key] =   new \ArrayObject(\Zend\Json\Json::decode($row), \ArrayObject::ARRAY_AS_PROPS);
-    		}
-    	}
-    
-    	parent::populateValues($data);
-    }
+//     	parent::populateValues($data);
+//     }
 }

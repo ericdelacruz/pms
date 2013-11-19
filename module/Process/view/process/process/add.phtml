@@ -186,9 +186,14 @@ $this->headTitle($title.' - ');
     	<span class="processLabels">VI. Samples </span><br/>
         <input type="file" maxlength="1" class="multi max-1 accept-gif|jpg|png" name="sampleFiles" value="">
     </div>
-    <div class="clearBoth"><br/></div>
-	<?php
-		echo $this->formSubmit($form->get('submit'));
-		echo $this->form()->closeTag();
-	?>
 </div>
+
+<div class="form-actions text-right">
+	<a href="<?php echo $this->url('dashboard') ?>" class="btn pull-left"> <i
+		class="icon-chevron-left"></i> Back to Dashboard
+	</a>
+
+	<?php echo $this->formSubmit($form->get('submit')) ?>
+	<a href="<?php echo $this->url('process') ?>" class="btn btn-danger">Cancel</a>
+</div>
+<?php echo $this->form()->closeTag(); ?>
